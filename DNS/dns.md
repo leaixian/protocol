@@ -31,13 +31,54 @@ DNS服务器向根域名服务器发送查询报文"query zh.wikipedia.org"，�
 一个域名的所有者可以通过查询WHOIS数据库[3]而被找到；对于大多数根域名服务器，基本的WHOIS由ICANN维护，而WHOIS的细节则由控制那个域的域注册机构维护。
 对于240多个国家代码顶级域名（ccTLDs），通常由该域名权威注册机构负责维护WHOIS。例如中国互联网络信息中心（China Internet Network Information Center）负责.CN域名的WHOIS维护，香港互联网注册管理有限公司（Hong Kong Internet Registration Corporation Limited）负责.HK域名的WHOIS维护，台湾网络信息中心（Taiwan Network Information Center）负责.TW域名的WHOIS维护。
 ## DNS协议格式
-DNS协议格式如下所示:<br/>
+### DNS查询协议格式
 
 ![DNS协议格式](img/DNSformat.jpg "DNS协议格式")<br/>
 
-Header格式如下所示:<br/>
+* Question: 定义了到域名服务器的查询，包含QTYPE,QCLASS,QNAME,
+* Answer,Athority，Additional可能为空，
+* Answer:包含了DNS服务器查询返回的资源记录。
+* Authority：包含了权威域名服务的响应资源记录
+* Additional：包含了和查询相关的资源记录，但是不一定是Query定义的查询的结果。
+
+#### DNS查询中的Header格式
 
 ![DNS Header format](img/headerformat.jpg "Header format")<br/>
 
+>* ID:16bit长度，用来标识此次查询用来和响应进行匹配。
+* QR:1bit，代表这个包是响应包还是查询包
+* OPCODE:4bit，代表这次查询的类型
+	* 0:标准查询
+	* 1:反向查询
+	* 2:服务器状态请求
+	* 3-15:作为未来用
+* AA:1bit 用在响应包中，如果为1则表明本次的回答是权威DNS服务器的回答。
+* TC:1bit 用来表明本次包因为长度太长被切断了。
+* RD:1bit 这个位设置在查询包中，并复制到响应包中，如果为1，则直接到DNS服务器进行递归查询。
+* RA:1bit 用在响应包中，表明服务器是否在支持递归查询。
+* Z:4bit  必须为0，留作未来使用。
+* RCODE:4bit 响应码:作为响应的一部分.
+* QDCOUNT:16bit 表明查询的个数
+* ANCOUNT:16bit 表明响应的资源记录个数
+* NSCOUNT:16bit 表明Authority区域的资源记录个数即权威响应的资源记录个数
+* ARCOUNT:16bit 表明Additional域的资源记录个数
+####  Question部分格式
+
+![DNS Question format](img/QuestionFormat.jpg "Question format")<br/>
+
+* QNAME:域名
+* QTYPE:查询类型
+* QCLASS: 查询所属类别
+#### Answer部分格式
+Answer,Authority,Additional三部分格式相同如下如所示:<br/>
+![DNS Question format](img/AnswerFormat.jpg "Question format")<br/>
+
+* NAME:域名eg:baidu.com
+* TYPE:资源记录(RR)类型，值得是RDATA类型
+* CLASS:RR类别
+* TTL:存活时间(单位：秒)
+* RDLENGTH:记录RDATA的长度
+* 具体具体分析可参考2
 ## 参考
-https://zh.wikipedia.org/wiki/域名系统
+1.https://zh.wikipedia.org/wiki/域名系统<br/>
+2.https://tools.ietf.org/html/rfc1035<br/>
