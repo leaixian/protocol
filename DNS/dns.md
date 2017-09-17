@@ -31,6 +31,11 @@ DNS服务器向根域名服务器发送查询报文"query zh.wikipedia.org"，�
 一个域名的所有者可以通过查询WHOIS数据库[3]而被找到；对于大多数根域名服务器，基本的WHOIS由ICANN维护，而WHOIS的细节则由控制那个域的域注册机构维护。
 对于240多个国家代码顶级域名（ccTLDs），通常由该域名权威注册机构负责维护WHOIS。例如中国互联网络信息中心（China Internet Network Information Center）负责.CN域名的WHOIS维护，香港互联网注册管理有限公司（Hong Kong Internet Registration Corporation Limited）负责.HK域名的WHOIS维护，台湾网络信息中心（Taiwan Network Information Center）负责.TW域名的WHOIS维护。
 ## DNS协议格式
-![DNS协议格式]:(i) "DNS协议格式"
+![DNS协议格式](img/DNS协议格式.jpg "DNS协议格式")<br/>
+
+Header格式如下所示:<br/>
+
+![DNS Header format](img/headerformat.jpg "Header format")<br/>
+
 ## 参考
 https://zh.wikipedia.org/wiki/域名系统
